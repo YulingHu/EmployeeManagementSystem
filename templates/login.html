@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Login丨Lisa</title>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<body>
+<div class="login-container">
+    <h1>Lisa Employee Management System</h1>
+    <div class="connect">
+        <p>Welcome to Lisa Management .</p>
+    </div>
+    <form action="" method="post" id="loginForm">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="email" class="email" placeholder="email" autocomplete="off"/>
+        </div>
+        <div>
+            <input type="password" name="password" class="password" placeholder="password" oncontextmenu="return false"
+                   onpaste="return false"/>
+        </div>
+        <div>{{ error }}</div>
+        <button id="submit" type="submit">Login</button>
+    </form>
+    <a href="{% url 'App:register' %}">
+        <button type="button" class="register-tis">Do not have account?</button>
+    </a>
+</div>
+</body>
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/supersized.3.2.7.min.js' %}"></script>
+<script src="{% static 'js/supersized-init.js' %}"></script>
+
+</html>
+
+
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Lisa 登录(●'◡'●)~-Lisa </title>#}
+{#    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">#}
+{#    <link rel="stylesheet" href="/static/css/signin.css">#}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#<div class="container">#}
+{#    <form class="form-signin" action="" method="post">#}
+{#        {% csrf_token %}#}
+{#        <h2 class="form-signin-heading">请 登 录</h2>#}
+{#        <p style="color: red;">{{ msg }}</p>#}
+{#        <label for="inputEmail" class="sr-only">邮箱</label>#}
+{#        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">#}
+{#        <p style="color: red;">{{ passmsg }}</p>#}
+{#        <label for="inputPassword" class="sr-only">密码</label>#}
+{#        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">#}
+{##}
+{#        {{ error }}#}
+{#        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>#}
+{#        <br>#}
+{#        <a href="{% url 'App:register' %}"><button class="btn btn-lg btn-primary btn-block" type="button">注册</button></a>#}
+{#    </form>#}
+{##}
+{#</div> <!-- /container -->#}
+{##}
+{#</body>#}
+{#</html>#}
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>Lisa Employee Management System(●'◡'●)~-Lisa</title>
+    {% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/dashboard.css">
+    {% endblock %}
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Lisa Employee Management System</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+
+
+                {% if request.session.is_login %}
+                    <li><a href="" style="color: yellow">{{ request.session.username }}</a></li>
+                    <li><a href="{% url 'App:loginout' %}">Log out</a></li>
+
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    {% block left %}
+        <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="/user/index/" class="glyphicon glyphicon-home">&nbsp;Dashboard</a></li>
+                <li><a href="/user/showleavingmessage/" class="glyphicon glyphicon-pencil">&nbsp;Staff message</a></li>
+                <li><a href="/user/showcircular/" class="glyphicon glyphicon-tags">&nbsp;Company notice</a></li>
+                <li><a href="{% url 'App:leave_list' %}" class="glyphicon glyphicon-list-alt">&nbsp;Leave list</a></li>
+            </ul>
+
+        </div>
+    {% endblock %}
+
+    {% block main %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Executive introduction</h1>
+
+            <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="/static/images/wqsy.jpg"
+                         width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Lisa</h4>
+                    <span class="text-muted">CEO</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="/static/images/timg.jpg"
+                         width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Wayne</h4>
+                    <span class="text-muted">Vice President</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="/static/images/hdr1.jpg"
+                         width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Tom</h4>
+                    <span class="text-muted">Co-founder</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img src="/static/images/fgyy.jpg"
+                         width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4>Jerry</h4>
+                    <span class="text-muted">Co-founder</span>
+                </div>
+            </div>
+
+            <h2 class="sub-header">employee information</h2>
+
+                    <form role="search" class="navbar-form-custom" action="">
+                        <div class="form-group">
+                            <input type="text" placeholder="Search by email..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                {% if request.session.pk == 1 %}
+                    <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Employee ID</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                        <th>User name</th>
+                        <th>Password</th>
+                        <th>Address</th>
+                        <th>Operating</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.position.department.department_name }}</td>
+                            <td>{{ user.position.position }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.password }}</td>
+                            <td>{{ user.address }}</td>
+                            <td>
+                                <a class="btn-primary btn-sm glyphicon glyphicon-cog" href="/user/update/?uid={{ user.id }}"></a>
+                                <a class="btn-danger btn-sm glyphicon glyphicon-trash" href="/user/del/?uid={{ user.id }}"></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                        {% else %}
+                        <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Employee ID</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                        <th>User name</th>
+                        <th>Password</th>
+                        <th>Address</th>
+                        <th>Operating</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for user in users %}
+
+
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.position.department.department_name }}</td>
+                            <td>{{ user.position.position }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.username }}</td>
+                            {% if user.pk == request.session.pk %}
+                            <td>{{ user.password }}</td>
+                            <td>{{ user.address }}</td>
+                            <td>
+                                <a class="btn-primary btn-sm glyphicon glyphicon-cog" href="/user/update/?uid={{ user.id }}"></a>
+                            </td>
+                        {% endif %}
+                        </tr>
+
+                    {% endfor %}
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            <ul class="pager">
+                <div class="pagination">
+    <span class="step-links">
+
+{#        判断是否有上一页#}
+        {% if users.has_previous %}
+            <a href="?page={{ users.previous_page_number }}" class="btn btn-primary">Last Page</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ users.number }} （{{ users.number }}-{{ users.paginator.num_pages }}）
+        </span>
+{#      判断是否有下一页#}
+        {% if users.has_next %}
+            <a href="?page={{ users.next_page_number }}" class="btn btn-primary">Next Page</a>
+        {% endif %}
+    </span>
+                </div>
+            </ul>
+            </div>
+        </div>
+    {% endblock %}
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</body>
+
+
+{#<body>#}
+
+{#    <table border="1">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>序号</th>#}
+{#                <th>用户id</th>#}
+{#                <th>邮箱</th>#}
+{#                <th>用户名</th>#}
+{#                <th>操作</th>#}
+{#                #}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#
+{#        </tbody>#}
+{#    </table>#}
+{#</body>#}
+</html>

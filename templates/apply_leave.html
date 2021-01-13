@@ -1,0 +1,88 @@
+{% extends 'leave_list.html' %}
+{% block title %}
+    <span>Leave application message</span>
+{% endblock %}
+{% block active %}
+<ul class='nav nav-stacked'>
+                <li class=''>
+                    <a href='{% url 'App:leave_list' %}'>
+                        <i class='icon-th'></i>
+                        <span>Leave list</span>
+                    </a>
+                </li>
+                <li class='active'>
+                    <a href='{% url 'App:apply_leave' %}'>
+                        <i class='icon-th'></i>
+                        <span>Application leave form</span>
+                    </a>
+                </li>
+            </ul>
+{% endblock %}
+{% block leavemain %}
+<div class='box-content box-no-padding'>
+                                <div class='responsive-table'>
+                                    <div class='scrollable-area'>
+                                        <table class='data-table-column-filter table table-bordered table-striped'
+                                               style='margin-bottom:0;'>
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    name
+                                                </th>
+                                                <th>
+                                                    leave reason
+                                                </th>
+                                            <th>
+                                                leave time
+                                            </th>
+                                                <th>
+                                                    status
+                                                </th>
+                                                {% if request.session.pk == 1 %}
+                                                <th>operating</th>
+                                                {% endif %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for apply in applyleaves %}
+                                                <tr>
+                                                    <td>{{ apply.user.username }}</td>
+                                                    <td><a href="" class="__cf_email__"
+                                                           data-cfemail="6c0d02180302091818092c040318010d0500420f0301">{{ apply.reason }}</a>
+                                                    </td>
+                                                    <td>{{ apply.applydate }}</td>
+                                                    {% if apply.status == True %}
+                                                        <td>
+                                                            <span class='label label-success'>{{ apply.get_status_display }}</span>
+                                                        </td>
+
+                                                    {% else %}
+                                                        <td>
+                                                            <span class='label label-important'>{{ apply.get_status_display }}</span>
+                                                        </td>
+
+                                                    {% endif %}
+
+
+                                                    {% if request.session.pk == 1 %}
+                                                    <td>
+                                                        <div class='text-left'>
+                                                            <a class='btn btn-success btn-mini' href='{% url 'App:approval' %}?applyid={{ apply.pk }}&status=True'>
+                                                                approval
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                     {% endif %}
+                                                </tr>
+
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{% endblock %}

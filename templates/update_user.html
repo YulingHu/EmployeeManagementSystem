@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lisa Modify user information(●'◡'●)~-lisa</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/signin.css">
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="" method="post">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Please modify</h2>
+
+
+        <label for="inputEmail" class="sr-only">email</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="please input your email"
+               autofocus="">
+
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input name="username" type="text" id="inputUsername" class="form-control" value="{{ user.username }}" placeholder="please input your user name">
+
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input name="password" type="text" id="inputPassword" class="form-control" value="{{ user.password }}" placeholder="please input your pasword">
+
+        <label for="inputAddress" class="sr-only">Address</label>
+        <input name="address" type="text" id="inputAddress" class="form-control" value="{{ user.address }}" placeholder="please input your address">
+        {% if request.session.pk == 1 %}
+        Dep：
+        <select name="department_id" id="">
+            {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.department_name }}</option>
+            {% endfor %}
+        </select>
+
+        Position：
+        <select name="position_id" id="">
+            {% for position in positions %}
+                <option value="{{ position.id }}">{{ position.position }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+
+        <br>
+        <button class="btn btn-lg btn-danger btn-block" type="submit">Modify</button>
+        <br>
+        <a href="/user/index/"><button class="btn btn-lg btn-primary btn-block" type="button">Back</button></a>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

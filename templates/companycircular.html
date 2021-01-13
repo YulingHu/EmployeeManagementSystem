@@ -1,0 +1,77 @@
+{% extends 'leavingmessage.html' %}
+
+{% block title %}
+    <title>Lisa message board(●'◡'●)~-lisa</title>
+{% endblock %}
+
+{% block header %}
+    <div class="blog-masthead">
+        <div class="container">
+            <nav class="blog-nav">
+
+                <a class="blog-nav-item active" href="#">Company notice</a>
+            {% if request.session.pk == 1 %}
+                <a class="blog-nav-item" href="/user/addcircular/">Post notice</a>
+            {% endif %}
+                <a class="blog-nav-item" href="/user/index/">Back</a>
+                {% if request.session.is_login %}
+                    <a style="color: yellow" class="blog-nav-item pull-right" href="">{{ request.session.username }}</a>
+                {% endif %}
+
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="blog-header">
+            <h1 class="blog-title">The Lisa Company circular</h1>
+            <p class="lead blog-description">Announcement Office!</p>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-8 blog-main">
+                {% for contact in contacts %}
+
+                    <div class="blog-post">
+                    <h2 class="blog-post-title" style="font-family: 华文行楷">{{ contact.user.username }}</h2>
+                    <p class="blog-post-meta">{{ contact.addtime }}</p>
+
+                    <p>{{ contact.content }}</p>
+                    {% if request.session.pk == 1 %}
+                    <a class="btn btn-danger glyphicon glyphicon-trash pull-right" href="/user/delnotice/?uid={{ contact.user.id }}&noticeid={{ contact.pk }}">
+
+                    </a>
+                    {% endif %}
+                    <hr>
+
+
+
+                {% endfor %}
+                <ul class="pager">
+                    <div class="pagination">
+                    <span class="step-links">
+
+{#        判断是否有上一页#}
+                {% if contacts.has_previous %}
+                    <a href="?page={{ contacts.previous_page_number }}" class="btn btn-primary">Last page</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ contacts.number }}（{{ contacts.number }}-{{ contacts.paginator.num_pages }}）
+                </span>
+        {#      判断是否有下一页#}
+                {% if contacts.has_next %}
+                    <a href="?page={{ contacts.next_page_number }}" class="btn btn-primary">Next page</a>
+                {% endif %}
+                 </span>
+                    </div>
+                </ul>
+            </div>
+                </div><!-- /.blog-main -->
+
+            </div><!-- /.row -->
+    </div>
+{% endblock %}

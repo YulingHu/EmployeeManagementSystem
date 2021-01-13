@@ -1,0 +1,114 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Chenih注册(●'◡'●)~-chenih</title>#}
+{#    <link rel="stylesheet" href="/static/plugins/bootstrap-3.3.7-dist/css/bootstrap.css">#}
+{#    <link rel="stylesheet" href="/static/css/signin.css">#}
+{#</head>#}
+{##}
+{#<body>#}
+{##}
+{#<div class="container">#}
+{#    <form class="form-signin" action="" method="post">#}
+{#        {% csrf_token %}#}
+{#        <h2 class="form-signin-heading">请 注 册</h2>#}
+{##}
+{#        <p style="color: red">{{ msg }}</p>#}
+{#        <label for="inputEmail" class="sr-only">邮箱</label>#}
+{#        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="请输入邮箱" required=""#}
+{#               autofocus="">#}
+{##}
+{#        <label for="inputUsername" class="sr-only">用户名</label>#}
+{#        <input name="username" type="text" id="inputUsername" class="form-control" placeholder="请输入用户名" required="">#}
+{##}
+{#        <label for="inputPassword" class="sr-only">密码</label>#}
+{#        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="请输入密码" required="">#}
+{##}
+{##}
+{#        <label for="inputRePassword" class="sr-only">确认密码</label>#}
+{#        <input name="repassword" type="password" id="inputRePassword" class="form-control" placeholder="请确认密码"#}
+{#               required="">#}
+{##}
+{#        部门：#}
+{#        <select name="department_id" id="">#}
+{#            {% for department in departments %}#}
+{#                <option value="{{ department.id }}">{{ department.department_name }}</option>#}
+{#            {% endfor %}#}
+{#        </select>#}
+{##}
+{#        职位：#}
+{#        <select name="position_id" id="">#}
+{#            {% for position in positions %}#}
+{#                <option value="{{ position.id }}">{{ position.position }}</option>#}
+{#            {% endfor %}#}
+{#        </select>#}
+{##}
+{#        <br>#}
+{#        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>#}
+{#    </form>#}
+{#</div> <!-- /container -->#}
+{##}
+{#</body>#}
+{#</html>#}
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Register丨Lisa</title>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<body>
+<div class="login-container">
+    <h1>Lisa Managerment System</h1>
+    <div class="connect">
+        <p>Welcome to Lisa.</p>
+    </div>
+    <form action="" method="post" id="loginForm">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="email" class="email" placeholder="email" autocomplete="off"/>
+        </div>
+        <div>
+            <input type="text" name="username" class="username" placeholder="username" autocomplete="off"/>
+        </div>
+        <div>
+            <input type="password" name="password" class="password" placeholder="password" oncontextmenu="return false"
+                   onpaste="return false"/>
+        </div>
+        <div>
+            <input type="password" name="repassword" class="password" placeholder="confirm password" autocomplete="off"/>
+        </div>
+
+        <select name="department_id" id="">#}
+            {% for department in departments %}
+                <option value="{{ department.id }}">{{ department.department_name }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="position_id" id="">
+            {% for position in positions %}
+                <option value="{{ position.id }}">{{ position.position }}</option>
+            {% endfor %}
+        </select>
+
+
+        <div>{{ msg }}</div>
+        <button id="submit" type="submit">Register</button>
+    </form>
+    <a href="{% url 'App:login' %}">
+        <button type="button" class="register-tis">Already have account？</button>
+    </a>
+</div>
+</body>
+
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/common.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/supersized.3.2.7.min.js' %}"></script>
+<script src="{% static 'js/supersized-init.js' %}"></script>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lisa | Leave Management</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'/>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href='{% static 'css/leave/bootstrap.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-responsive.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/jquery-ui-1.10.0.custom.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/jquery.ui.1.10.0.ie.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-switch.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-editable.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-wysihtml5.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/jquery.fileupload-ui.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/fullcalendar.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/select2.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/mention.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/tabdrop.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/jquery.jgrowl.min.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-datatable.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/ui.dynatree.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-colorpicker.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-datetimepicker.min.css' %}' media='all' rel='stylesheet'
+          type='text/css'/>
+    <link href='{% static 'css/leave/bootstrap-daterangepicker.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/flags.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/slidernav.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/wizard.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <link href='{% static 'css/leave/light-theme.css' %}' id='color-settings-body-color' media='all' rel='stylesheet'
+          type='text/css'/>
+    <link href='{% static 'css/leave/demo.css' %}' media='all' rel='stylesheet' type='text/css'/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body class='contrast-red '>
+<header>
+    <div class='navbar'>
+        <div class='navbar-inner'>
+            <div class='container-fluid'>
+                <a class='brand' href='#'>
+                    <span class='hidden-phone'>Lisa leave management</span>
+                </a>
+
+                <ul class='nav pull-right'>
+                    <li class='dropdown dark user-menu'>
+                        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>
+                            <span class='user-name hidden-phone'>{{ request.session.username }}</span>
+                            <b class='caret'></b>
+                        </a>
+                        <ul class='dropdown-menu'>
+                            <li>
+                                <a href='{% url 'App:apply' %}'>
+                                    Ask to Leave
+                                </a>
+                            </li>
+                            <li>
+                                <a href='{% url 'App:index' %}'>
+                                    Back
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div id='wrapper'>
+    <div id='main-nav-bg'></div>
+    <nav class='' id='main-nav'>
+        <div class='navigation'>
+            <div class='search'>
+                <form accept-charset="UTF-8" action="search_results.html" method="get"/>
+                <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;"/></div>
+                <div class='search-wrapper'>
+                    <input autocomplete="off" class="search-query" id="q" name="q" placeholder="Search..." type="text"
+                           value=""/>
+                    <button class="btn btn-link icon-search" name="button" type="submit"></button>
+                </div>
+                </form>
+            </div>
+            {% block active %}
+            <ul class='nav nav-stacked'>
+                <li class='active'>
+                    <a href='{% url 'App:leave_list' %}'>
+                        <i class='icon-th'></i>
+                        <span>Leave list</span>
+                    </a>
+                </li>
+                <li class=''>
+                    <a href='{% url 'App:apply_leave' %}'>
+                        <i class='icon-th'></i>
+                        <span>Application holiday form</span>
+                    </a>
+                </li>
+            </ul>
+            {% endblock %}
+        </div>
+    </nav>
+    <section id='content'>
+        <div class='container-fluid'>
+            <div class='row-fluid' id='content-wrapper'>
+                <div class='span12'>
+                    <div class='row-fluid'>
+                        <div class='span12'>
+                            <div class='page-header'>
+                                <h1 class='pull-left'>
+                                    {% block title %}
+
+
+                                    <span>Staff leave status list</span>
+                                     {% endblock %}
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% block leavemain %}
+
+
+                    <div class='row-fluid'>
+                        <div class='span12 box bordered-box orange-border' style='margin-bottom:0;'>
+                            <div class='box-header purple-background'>
+                                <div class='title'>Company staff leave status details</div>
+                            </div>
+                            <div class='box-content box-no-padding'>
+                                <div class='responsive-table'>
+                                    <div class='scrollable-area'>
+                                        <table class='data-table-column-filter table table-bordered table-striped'
+                                               style='margin-bottom:0;'>
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    name
+                                                </th>
+                                                <th>
+                                                    email
+                                                </th>
+                                                <th>
+                                                    status
+                                                </th>
+                                                {% if request.session.pk == 1 %}
+                                                <th>operating</th>
+                                                {% endif %}
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for user in all_users %}
+                                                <tr>
+                                                    <td>{{ user.username }}</td>
+                                                    <td><a href="" class="__cf_email__"
+                                                           data-cfemail="6c0d02180302091818092c040318010d0500420f0301">{{ user.email }}</a>
+                                                    </td>
+
+                                                    {% if user.status == True %}
+                                                        <td>
+                                                            <span class='label label-important'>{{ user.get_status_display }}</span>
+                                                        </td>
+
+                                                    {% else %}
+                                                        <td>
+                                                            <span class='label label-success'>{{ user.get_status_display }}</span>
+                                                        </td>
+
+                                                    {% endif %}
+
+
+                                                    {% if request.session.pk == 1 %}
+                                                    <td>
+                                                        <div class='text-left'>
+                                                            <a class='btn btn-success btn-mini' href='{% url 'App:leave_edit' %}?uid={{ user.pk }}'>
+                                                                edit
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                     {% endif %}
+                                                </tr>
+
+                                            {% endfor %}
+
+
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <th>name</th>
+                                                <th>email</th>
+                                                <th colspan='2'>Status</th>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 {% endblock %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script data-cfasync="false" src="{% static 'js/leave/email-decode.min.js' %}"></script>
+<script src='{% static 'js/leave/jquery.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.mobile-events.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery-migrate.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery-ui.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/excanvas.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.sparkline.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/flot.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/flot.resize.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/flot.pie.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrapSwitch.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/fullcalendar.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.dataTables.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.dataTables.columnFilter.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/wysihtml5.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/bootstrap-wysihtml5.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/select2.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-colorpicker.min.js' %}'
+        type='text/javascript'></script>
+
+<script src='{% static 'js/leave/mention.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-inputmask.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-fileinput.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/modernizr.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/retina.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/tmpl.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/load-image.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/canvas-to-blob.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.iframe-transport.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.fileupload.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.fileupload-fp.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.fileupload-ui.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/jquery.fileupload-init.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.timeago.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.slimscroll.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.autosize-min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/charCount.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.validate.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/additional-methods.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/naked_password-0.2.4.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.nestable.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-tabdrop.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.jgrowl.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootbox.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jbootstrap-editable.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/wysihtml5.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/ckeditor.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.dynatree.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-datetimepicker.js' %}'
+        type='text/javascript'></script>
+
+<script src='{% static 'js/leave/moment.min.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/bootstrap-daterangepicker.js' %}'
+        type='text/javascript'></script>
+
+<script src='{% static 'js/leave/bootstrap-maxlength.min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/twitter-bootstrap-hover-dropdown.min.js' %}'
+        type='text/javascript'></script>
+
+<script src='{% static 'js/leave/slidernav-min.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/wizard.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/nav.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/tables.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/theme.js' %}' type='text/javascript'></script>
+
+<script src='{% static 'js/leave/jquery.mockjax.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/inplace_editing.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/charts.js' %}' type='text/javascript'></script>
+<script src='{% static 'js/leave/demo.js' %}' type='text/javascript'></script>
+</body>
+</html>

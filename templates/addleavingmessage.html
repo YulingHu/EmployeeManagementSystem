@@ -1,0 +1,39 @@
+{% extends 'leavingmessage.html' %}
+{% block title %}
+    <title>Lisa message board(●'◡'●)~-lisa</title>
+{% endblock %}
+
+{% block header %}
+    <div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+
+            <a class="blog-nav-item" href="/user/showleavingmessage">Message Board</a>
+            <a class="blog-nav-item active" href="#">Post a message</a>
+            <a class="blog-nav-item" href="/user/index/">Back</a>
+            {% if request.session.is_login %}
+                <a style="color: yellow" class="blog-nav-item pull-right" href="">{{ request.session.username }}</a>
+            {% endif %}
+        </nav>
+    </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+    <div class="blog-header">
+        <h1 class="blog-title">The Lisa Message Board</h1>
+        <p class="lead blog-description">A place for employees to express their opinions ~ making friends and relaxing...</p>
+    </div>
+{#   留言板文本框     #}
+        <form action="" method="post">
+            {% csrf_token %}
+            <textarea class="form-control" rows="8" name="content" placeholder="Speak freely~"></textarea>
+            <br>
+            <button type="submit" class="btn btn-primary">Post message</button>
+        </form>
+    </div>
+
+
+{% endblock %}

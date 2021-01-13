@@ -1,0 +1,11 @@
+{% extends 'leave_list.html' %}
+{% block title %}
+    <span>Leave statusedit</span>
+{% endblock %}
+{% block leavemain %}
+    <form action="" method="post" novalidate>
+        {% csrf_token %}
+        {{ userform }}
+    <p><button class="btn btn-primary">Submit</button></p>
+    </form>
+{% endblock %}
